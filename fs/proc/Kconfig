@@ -97,7 +97,7 @@ config PROC_FSLOG
 config PROC_STLOG
 	bool "Enable Storage log"
 	depends on PROC_FSLOG
-	default y
+	default n
 
 config PROC_DLOG
 	bool "Enable delete logs for improving filesystem debug"
