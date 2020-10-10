@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0
 dtb-y += exynos/dtbo/exynos7885.dtb
-dtbo-y += exynos/dtbo/exynos7904-a30s_eur_open_00.dtbo
-dtbo-y += exynos/dtbo/exynos7904-a30s_eur_open_01.dtbo
-dtbo-y += exynos/dtbo/exynos7904-a30s_eur_open_02.dtbo
-dtbo-y += exynos/dtbo/exynos7904-a30s_eur_open_03.dtbo
 
-targets += dtbs
-DTB_LIST  := $(dtb-y) $(dtbo-y)
-always    := $(DTB_LIST)
+dtb-$(CONFIG_MACH_EXYNOS7885_A30s_GLOBAL) := \
+	exynos/dtbo/exynos7904-a30s_eur_open_00.dtbo \
+	exynos/dtbo/exynos7904-a30s_eur_open_01.dtbo \
+	exynos/dtbo/exynos7904-a30s_eur_open_02.dtbo \
+	exynos/dtbo/exynos7904-a30s_eur_open_03.dtbo
 
-dtbs: $(addprefix $(obj)/, $(DTB_LIST))
-
-clean-files := *.dtb*
+ifeq ($(CONFIG_MACH_EXYNOS7885_A30s_GLOBAL),y)
+always         := $(dtb-y) $(dtbo-y)
+clean-files    := *.dtb *.dtbo
+endif
