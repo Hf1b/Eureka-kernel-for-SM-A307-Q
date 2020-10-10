@@ -200,7 +200,7 @@
 
 						b5_reg: BUCK5 {
 							regulator-name = "vdd_g3d";
-							regulator-min-microvolt = <500000>;
+							regulator-min-microvolt = <400000>;
 							regulator-max-microvolt = <1300000>;
 							regulator-always-on;
 							regulator-ramp-delay = <12000>;
