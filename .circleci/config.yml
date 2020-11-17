@@ -7,6 +7,7 @@ jobs:
     working_directory: ~/Eureka
     environment:
       ARTPATH: /tmp/artifacts
+      FORCECORES: 64
       FORCEANDROID: 1
       FORCEDEVICE: 3
 

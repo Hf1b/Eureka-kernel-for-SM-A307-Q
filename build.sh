@@ -271,12 +271,14 @@ ARTIFACTS()
 
 PROCESSES()
 {
-	if [ -z "$CIRCLECI" ]; then
+	if [[ "$FORCECORES" =~ ^[0-9]+$ ]]; then
+		CORES=$FORCECORES
+	else
 		# Allow user to choose how many cores to be taken by compiler
 
 		echo "Your system has $CORES cores."
 		read -p "Please enter how many cores to be used by compiler (Leave blank to use all cores) : " cores;
-		if [ "${cores}" == "" ]; then
+		if [ "$cores" == "" ]; then
 			echo " "
 			echo "Using all $CORES cores for compilation"
 			sleep 2
@@ -286,8 +288,6 @@ PROCESSES()
 			CORES=$cores
 			sleep 2
 		fi
-	else
-		CORES=64
 	fi
 }
 
