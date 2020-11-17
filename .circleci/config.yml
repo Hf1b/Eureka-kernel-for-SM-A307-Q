@@ -6,40 +6,27 @@ jobs:
 
     working_directory: ~/Eureka
     environment:
-      ARCH: arm64
-      NAME: exynos7885-a30s_gsi_permissive
+      ZIPPATH: /artifacts
+      FORCEANDROID: 1
+      FORCEDEVICE: 3
 
     steps:
       - checkout
+
       - run: |
           # APT stuff
           apt update &>/dev/null
           apt install git zip build-essential python ccache bc -y &>/dev/null
-          echo Installed necessary packages
       - run: |
           # Linaro stuff
           rm toolchain
           git clone https://github.com/Chatur27/Toolchains-for-Eureka -b linaro6.5 toolchain &>/dev/null
-          echo Cloned toolchain
+          touch toolchain/linaro6.5
       - run: |
-          # Define options
-          export CROSS_COMPILE=$(pwd)/toolchain/bin/aarch64-linux-gnu-
-          export CROSS_COMPILE_ARM32=$(pwd)/toolchain/bin/arm-linux-gnueabi-
-          export LOCALVERSION=-Eureka_R5.0_A307_Unofficial_Q
-          export ANDROID_MAJOR_VERSION=q
-          
-          # Build process
-          make "$NAME"_defconfig
-          make -j64
-          echo Kernel is builded
-      - run: |
-          # Zippify
-          cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
-          cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
-          cd kernel_zip/anykernel
-          mkdir /tmp/artifacts
-          zip -r9 /tmp/artifacts/$NAME.zip META-INF modules patch ramdisk tools anykernel.sh Image dtbo.img version
-          echo All is done
-          
+          mkdir /atifacts
+          for var in 1 2 3; do
+            FORCESE=$var ./build.sh
+          done
+
       - store_artifacts:
-          path: /tmp/artifacts
+          path: /artifacts
