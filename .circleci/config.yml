@@ -6,7 +6,7 @@ jobs:
 
     working_directory: ~/Eureka
     environment:
-      ZIPPATH: /artifacts
+      ARTPATH: /tmp/artifacts
       FORCEANDROID: 1
       FORCEDEVICE: 3
 
@@ -23,10 +23,11 @@ jobs:
           git clone https://github.com/Chatur27/Toolchains-for-Eureka -b linaro6.5 toolchain &>/dev/null
           touch toolchain/linaro6.5
       - run: |
-          mkdir /atifacts
+          mkdir /tmp/artifacts
           for var in 1 2 3; do
             FORCESE=$var ./build.sh
           done
 
       - store_artifacts:
-          path: /artifacts
+          path: /tmp/artifacts
+          destination: files

@@ -192,8 +192,8 @@ ZIPPIFY()
 		
 		# Go to anykernel directory
 		cd kernel_zip/anykernel
-		zip -r9 $ZIPPATH/$ZIPNAME META-INF modules patch ramdisk tools anykernel.sh Image dtbo.img version
-		chmod 0777 $ZIPPATH/$ZIPNAME
+		zip -r9 $ZIPNAME META-INF modules patch ramdisk tools anykernel.sh Image dtbo.img version
+		chmod 0777 $ZIPNAME
 		# Change back into kernel source directory
 		cd ..
 		sleep 1
@@ -246,6 +246,26 @@ AROMA_ZIP()
 		cd ..
 		sleep 1
 		cd ..
+	fi
+}
+
+ARTIFACTS()
+{
+	# Copy output files to $ARTPATH if exists
+
+	ZIPDEST=kernel_zip/anykernel/$ZIPNAME
+	AROMADEST=kernel_zip/aroma/aroma_files/$AROMA_DIR/$AROMA_ZIP
+
+	if [ -d "$ARTPATH" ]; then
+		echo " Copying output files to $ARTPATH "
+		if [ -e $ZIPDEST ]; then
+			cp $ZIPDEST $ARTPATH/$ZIPNAME
+		fi
+		if [ -e $AROMADEST ]; then
+			cp $AROMADEST $ARTPATH/$AROMA_ZIP
+		fi
+	else
+		echo " Artifacts folder isn't specified... "
 	fi
 }
 
@@ -459,6 +479,8 @@ COMMON_STEPS()
 	sleep 1
 	AROMA_ZIP
 	sleep 1
+	ARTIFACTS
+	sleep 1
 	CLEAN_SOURCE
 	sleep 1
 	ONEUI_STATE
@@ -547,10 +569,6 @@ SELINUX
 clear
 MTP_FIX
 clear
-
-if [ -z "$ZIPPATH" ]; then
-	ZIPPATH=$(pwd)/kernel_zip/anykernel
-fi
 
 echo "******************************************************"
 echo "*             $PROJECT_NAME Build Script             *"
