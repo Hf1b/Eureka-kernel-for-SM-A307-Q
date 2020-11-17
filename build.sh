@@ -128,6 +128,11 @@ CLEAN_SOURCE()
 	sleep 1	
 }
 
+RESTORE_BIN()
+{
+	cp -r build_files/firmware/tsp_imagis firmware
+}
+
 BUILD_KERNEL()
 {
 	echo "*****************************************************"
@@ -527,6 +532,7 @@ Please select your Android Version: '
 
 AUTO_TOOLCHAIN
 CLEAN_SOURCE
+RESTORE_BIN
 clear
 PROCESSES
 clear
