@@ -1,5 +1,5 @@
 #
-# (C) COPYRIGHT 2012 ARM Limited. All rights reserved.
+# (C) COPYRIGHT 2011-2013 ARM Limited. All rights reserved.
 #
 # This program is free software and is provided to you under the terms of the
 # GNU General Public License version 2 as published by the Free Software
@@ -19,5 +19,18 @@
 #
 #
 
+# linux build system bootstrap for out-of-tree module
 
-obj-$(CONFIG_MALI_MIDGARD) += midgard/
+# default to building for the host
+ARCH ?= $(shell uname -m)
+
+ifeq ($(KDIR),)
+$(error Must specify KDIR to point to the kernel to target))
+endif
+
+all:
+	$(MAKE) ARCH=$(ARCH) -C $(KDIR) M=$(CURDIR) EXTRA_CFLAGS="-I$(CURDIR)/../../../include" CONFIG_DMA_SHARED_BUFFER_TEST_EXPORTER=m
+
+clean:
+	$(MAKE) ARCH=$(ARCH) -C $(KDIR) M=$(CURDIR) clean
+

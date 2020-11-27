@@ -1,5 +1,5 @@
 #
-# (C) COPYRIGHT 2012 ARM Limited. All rights reserved.
+# (C) COPYRIGHT 2010-2019 ARM Limited. All rights reserved.
 #
 # This program is free software and is provided to you under the terms of the
 # GNU General Public License version 2 as published by the Free Software
@@ -20,4 +20,19 @@
 #
 
 
-obj-$(CONFIG_MALI_MIDGARD) += midgard/
+KDIR ?= /lib/modules/$(shell uname -r)/build
+
+BUSLOG_PATH_RELATIVE = $(CURDIR)/../../../..
+KBASE_PATH_RELATIVE = $(CURDIR)
+
+ifeq ($(CONFIG_MALI_BUSLOG),y)
+#Add bus logger symbols
+EXTRA_SYMBOLS += $(BUSLOG_PATH_RELATIVE)/drivers/base/bus_logger/Module.symvers
+endif
+
+# we get the symbols from modules using KBUILD_EXTRA_SYMBOLS to prevent warnings about unknown functions
+all:
+	$(MAKE) -C $(KDIR) M=$(CURDIR) EXTRA_CFLAGS="-I$(CURDIR)/../../../../include -I$(CURDIR)/../../../../tests/include $(SCONS_CFLAGS)" $(SCONS_CONFIGS) KBUILD_EXTRA_SYMBOLS="$(EXTRA_SYMBOLS)" modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(CURDIR) clean

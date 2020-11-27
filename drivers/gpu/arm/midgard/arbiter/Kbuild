@@ -1,5 +1,5 @@
 #
-# (C) COPYRIGHT 2012 ARM Limited. All rights reserved.
+# (C) COPYRIGHT 2019-2020 ARM Limited. All rights reserved.
 #
 # This program is free software and is provided to you under the terms of the
 # GNU General Public License version 2 as published by the Free Software
@@ -19,5 +19,6 @@
 #
 #
 
-
-obj-$(CONFIG_MALI_MIDGARD) += midgard/
+mali_kbase-y += \
+	arbiter/mali_kbase_arbif.o \
+	arbiter/mali_kbase_arbiter_pm.o
