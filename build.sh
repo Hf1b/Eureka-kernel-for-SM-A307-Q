@@ -352,6 +352,8 @@ SELINUX()
 		echo " "
 		echo "  3. Build GSI version of Eureka with ENFORCING SElinux";
 		echo " "
+		echo "  4. Build Halium version of Eureka"
+		echo " "
 		echo "Leave empty to exit this script";
 		echo " "
 		echo " "
@@ -375,6 +377,11 @@ SELINUX()
 		3)
 			export SELINUX_B=enforcing
 			export SELINUX_STATUS="$SELINUX_B"_
+			export TYPE="gsi"
+			;;
+		4)
+			export SELINUX_B=permissive
+			export SELINUX_STATUS="halium"_
 			export TYPE="gsi"
 			;;
 		*)

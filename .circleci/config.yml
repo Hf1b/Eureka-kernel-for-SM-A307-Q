@@ -33,7 +33,7 @@ jobs:
           touch toolchain/$ID
       - run: |
           mkdir /tmp/artifacts
-          for var in 1 2 3; do
+          for var in 4; do
             FORCESE=$var ./build.sh
           done
 
