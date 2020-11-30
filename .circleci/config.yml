@@ -7,6 +7,7 @@ jobs:
     working_directory: ~/Eureka
     environment:
       ARTPATH: /tmp/artifacts
+      TOOLCHAIN: gcc
       FORCECORES: 64
       FORCEANDROID: 1
       FORCEDEVICE: 3
@@ -19,10 +20,17 @@ jobs:
           apt update &>/dev/null
           apt install git zip build-essential python ccache bc -y &>/dev/null
       - run: |
-          # Linaro stuff
+          # Toolchain download
           rm toolchain
-          git clone https://github.com/Chatur27/Toolchains-for-Eureka -b linaro6.5 toolchain &>/dev/null
-          touch toolchain/linaro6.5
+          if [ "$TOOLCHAIN" == gcc ]; then
+            BRANCH=GCC-4.9
+            ID=gcc4.9
+          else
+            BRANCH=linaro6.5
+            ID=linaro6.5
+          fi
+          git clone https://github.com/Chatur27/Toolchains-for-Eureka -b "$BRANCH" toolchain &>/dev/null
+          touch toolchain/$ID
       - run: |
           mkdir /tmp/artifacts
           for var in 1 2 3; do

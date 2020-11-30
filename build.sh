@@ -146,16 +146,14 @@ BUILD_KERNEL()
 
 AUTO_TOOLCHAIN()
 {
-	if [ -e "toolchain/linaro6.5" ]
-	then
+	if [ -e "toolchain/linaro6.5" ]; then
 		echo " "
 		echo "Using Linaro v6.5 toolchain"
 		echo " "
 
 		GCC_ARM64_FILE=aarch64-linux-gnu-
 		GCC_ARM32_FILE=arm-linux-gnueabi-
-	elif [ -e "toolchain/gcc4.9" ]
-	then
+	elif [ -e "toolchain/gcc4.9" ]; then
 		echo " "
 		echo "Using Gcc v4.9 toolchain"
 		echo " "
@@ -178,8 +176,7 @@ ZIPPIFY()
 {
 	# Make Eureka flashable zip
 
-	if [ -e "arch/$ARCH/boot/Image" ]
-	then
+	if [ -e "arch/$ARCH/boot/Image" ]; then
 		echo -e "*****************************************************"
 		echo -e "                                                     "
 		echo -e "       Building Eureka anykernel flashable zip       "
