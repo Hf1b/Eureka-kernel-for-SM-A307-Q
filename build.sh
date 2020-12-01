@@ -176,7 +176,12 @@ ZIPPIFY()
 {
 	# Make Eureka flashable zip
 
-	if [ -e "arch/$ARCH/boot/Image" ]; then
+	IMAGEDEST=Image
+	if [ "$SELINUX_STATUS" == halium_ ]; then
+		IMAGEDEST=Image.gz
+	fi
+
+	if [ -e "arch/$ARCH/boot/$IMAGEDEST" ]; then
 		echo -e "*****************************************************"
 		echo -e "                                                     "
 		echo -e "       Building Eureka anykernel flashable zip       "
@@ -184,12 +189,12 @@ ZIPPIFY()
 		echo -e "*****************************************************"
 		
 		# Copy Image and dtbo.img to anykernel directory
-		cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
+		cp -f arch/$ARCH/boot/$IMAGEDEST kernel_zip/anykernel/$IMAGEDEST
 		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
 		
 		# Go to anykernel directory
 		cd kernel_zip/anykernel
-		zip -r9 $ZIPNAME META-INF modules patch ramdisk tools anykernel.sh Image dtbo.img version
+		zip -r9 $ZIPNAME META-INF modules patch ramdisk tools anykernel.sh $IMAGEDEST dtbo.img version
 		chmod 0777 $ZIPNAME
 		# Change back into kernel source directory
 		cd ..
@@ -381,7 +386,7 @@ SELINUX()
 			;;
 		4)
 			export SELINUX_B=permissive
-			export SELINUX_STATUS="halium"_
+			export SELINUX_STATUS=halium_
 			export TYPE="gsi"
 			;;
 		*)

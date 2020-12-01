@@ -7,7 +7,7 @@ jobs:
     working_directory: ~/Eureka
     environment:
       ARTPATH: /tmp/artifacts
-      TOOLCHAIN: gcc
+      TOOLCHAIN: linaro
       FORCECORES: 64
       FORCEANDROID: 1
       FORCEDEVICE: 3
